@@ -6,30 +6,24 @@
   <title>NativeCamp復習ツール</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=IBM+Plex+Mono:wght@500&family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=IBM+Plex+Mono:wght@500&family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-deep: #151021;
-      --bg-mid: #201436;
-      --bg-soft: #2b1a46;
-      --panel: rgba(28, 18, 46, 0.84);
-      --panel-border: rgba(203, 170, 255, 0.3);
-      --ink: #fff2ff;
-      --muted: #e2d4f2;
-      --pink: #ff66b9;
-      --pink-strong: #ff3fa8;
-      --lilac: #b48cff;
-      --mint: #7ff7d6;
-      --danger: #ff9ea3;
-      --success: #97ffd7;
-      --line: rgba(207, 174, 255, 0.28);
-      --shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
-      --radius-xl: 24px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
+      --bg: #f6f7ff;
+      --bg-soft: #fff5fd;
+      --card: #ffffff;
+      --ink: #25304a;
+      --muted: #65708f;
+      --line: #e4e7f5;
+      --brand: #ec4fa0;
+      --brand-strong: #d63f8f;
+      --accent: #7a6dff;
+      --success: #1f9d6b;
+      --danger: #cc3c4e;
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --shadow: 0 14px 32px rgba(35, 50, 85, 0.11);
     }
 
     * {
@@ -39,206 +33,112 @@
     body {
       margin: 0;
       min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 10%, #ffe6f4 0%, transparent 32%),
+        radial-gradient(circle at 92% 6%, #e8e7ff 0%, transparent 28%),
+        linear-gradient(170deg, var(--bg) 0%, #f8f9ff 48%, var(--bg-soft) 100%);
       color: var(--ink);
       font-family: "M PLUS Rounded 1c", "Hiragino Sans", "Yu Gothic", sans-serif;
+      padding: 18px 12px 34px;
       line-height: 1.55;
-      padding: 24px 16px 38px;
-      position: relative;
-      overflow-x: hidden;
-      background: linear-gradient(145deg, var(--bg-deep) 0%, var(--bg-mid) 54%, #120b22 100%);
-    }
-
-    .kuromi-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 10% 12%, rgba(255, 118, 192, 0.34), transparent 35%),
-        radial-gradient(circle at 90% 6%, rgba(177, 126, 255, 0.26), transparent 30%),
-        radial-gradient(circle at 75% 85%, rgba(130, 246, 220, 0.14), transparent 34%);
-    }
-
-    .kuromi-bg::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-      background-size: 20px 20px;
-      opacity: 0.18;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 999px;
-      opacity: 0.65;
-      filter: blur(0.5px);
-      animation: float 11s ease-in-out infinite;
-    }
-
-    .orb.a {
-      width: 150px;
-      height: 150px;
-      left: -32px;
-      top: 28%;
-      background: linear-gradient(140deg, rgba(255, 106, 185, 0.7), rgba(164, 128, 255, 0.42));
-    }
-
-    .orb.b {
-      width: 200px;
-      height: 200px;
-      right: -50px;
-      top: 58%;
-      background: linear-gradient(140deg, rgba(178, 133, 255, 0.62), rgba(255, 124, 197, 0.38));
-      animation-delay: 1.8s;
-    }
-
-    .orb.c {
-      width: 120px;
-      height: 120px;
-      right: 20%;
-      top: -26px;
-      background: linear-gradient(140deg, rgba(123, 246, 220, 0.42), rgba(185, 151, 255, 0.48));
-      animation-delay: 3.5s;
     }
 
     .app {
-      width: min(1120px, 100%);
+      width: min(920px, 100%);
       margin: 0 auto;
-      position: relative;
-      z-index: 1;
       display: grid;
-      gap: 16px;
+      gap: 14px;
     }
 
-    .panel {
-      background: linear-gradient(160deg, rgba(34, 22, 55, 0.9), rgba(22, 15, 37, 0.85));
-      border: 1px solid var(--panel-border);
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(7px);
     }
 
     .hero {
-      padding: 20px 22px;
-      animation: reveal 0.5s ease-out both;
-    }
-
-    .hero-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+      gap: 14px;
       align-items: center;
     }
 
-    .badge-wrap {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
+    .tag {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
       border-radius: 999px;
-      font-size: 0.75rem;
+      padding: 4px 10px;
+      font-size: 0.73rem;
       font-weight: 700;
-      padding: 5px 11px;
-      background: rgba(255, 102, 185, 0.22);
-      border: 1px solid rgba(255, 130, 199, 0.48);
-      color: #ffd6f2;
+      color: #a22a6d;
+      background: #ffe5f3;
+      border: 1px solid #ffc6e5;
       letter-spacing: 0.03em;
+      margin-bottom: 8px;
     }
 
-    .badge.alt {
-      background: rgba(127, 247, 214, 0.16);
-      border-color: rgba(127, 247, 214, 0.36);
-      color: #d8fff5;
-    }
-
-    .hero h1 {
-      margin: 12px 0 8px;
+    h1 {
+      margin: 0;
       font-family: "Baloo 2", "M PLUS Rounded 1c", sans-serif;
-      font-size: clamp(1.65rem, 4.2vw, 2.45rem);
+      font-size: clamp(1.55rem, 5vw, 2.15rem);
       line-height: 1.08;
       letter-spacing: 0.01em;
-    }
-
-    .hero h1 .accent {
-      color: #ff9ddd;
-      text-shadow: 0 0 16px rgba(255, 120, 202, 0.55);
+      color: #28334f;
     }
 
     .hero p {
-      margin: 0;
+      margin: 8px 0 0;
+      font-size: 0.9rem;
       color: var(--muted);
-      font-size: 0.92rem;
     }
 
-    .stat-grid {
-      margin-top: 14px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 9px;
-    }
-
-    .stat-card {
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(205, 171, 255, 0.3);
-      background: rgba(255, 255, 255, 0.05);
+    .character {
+      margin: 0;
+      background: #faf8ff;
+      border: 1px solid #ece3ff;
+      border-radius: var(--radius-lg);
       padding: 10px;
     }
 
-    .stat-label {
-      font-size: 0.72rem;
-      color: #d8c8eb;
-      margin-bottom: 1px;
-      letter-spacing: 0.02em;
+    .character img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      background: #efeefd;
+      border: 1px solid #e1dff8;
     }
 
-    .stat-value {
-      font-family: "Baloo 2", sans-serif;
-      font-size: 1.14rem;
-      font-weight: 700;
-      color: #ffe9fa;
-      line-height: 1.2;
+    .character figcaption {
+      margin-top: 7px;
+      font-size: 0.76rem;
+      color: #7a6f9f;
+      text-align: center;
     }
 
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-      gap: 16px;
-      align-items: start;
+    .panel {
+      padding: 16px;
     }
 
-    .input-panel,
-    .side-panel {
-      padding: 18px;
-      animation: reveal 0.6s ease-out both;
-    }
-
-    .side-panel {
-      animation-delay: 0.08s;
-    }
-
-    .panel-title {
+    .panel h2 {
       margin: 0;
       font-family: "Baloo 2", "M PLUS Rounded 1c", sans-serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.02em;
+      font-size: 1.1rem;
+      letter-spacing: 0.01em;
     }
 
     .panel-sub {
-      margin: 2px 0 0;
-      color: var(--muted);
+      margin: 3px 0 0;
       font-size: 0.84rem;
+      color: var(--muted);
     }
 
     .field {
-      margin-top: 14px;
+      margin-top: 13px;
     }
 
     .field-head {
@@ -246,7 +146,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      margin-bottom: 7px;
+      margin-bottom: 6px;
     }
 
     .field-label {
@@ -255,65 +155,58 @@
       gap: 8px;
       font-size: 0.9rem;
       font-weight: 700;
-      color: #ffe9fa;
+      color: #2a3550;
     }
 
     .step {
-      width: 24px;
-      height: 24px;
+      width: 23px;
+      height: 23px;
       border-radius: 999px;
       display: inline-grid;
       place-items: center;
-      font-size: 0.74rem;
       font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      background: rgba(255, 102, 185, 0.26);
-      border: 1px solid rgba(255, 141, 205, 0.52);
-      color: #ffe0f5;
-    }
-
-    .field-meta {
-      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      color: #ccb8e2;
-      font-size: 0.73rem;
+      font-size: 0.72rem;
+      color: #7c3898;
+      background: #f8e9ff;
+      border: 1px solid #efcafc;
     }
 
     textarea {
       width: 100%;
-      border: 1px solid rgba(212, 184, 255, 0.35);
+      border: 1px solid #d6dceb;
       border-radius: var(--radius-lg);
-      background: rgba(13, 10, 22, 0.58);
-      color: #fff6fe;
+      padding: 11px 12px;
       font: inherit;
-      padding: 12px 13px;
+      color: var(--ink);
+      background: #ffffff;
       line-height: 1.62;
       outline: none;
       resize: vertical;
-      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
     textarea::placeholder {
-      color: rgba(240, 214, 255, 0.62);
+      color: #97a0b9;
     }
 
     textarea:focus {
-      border-color: rgba(255, 130, 204, 0.9);
-      box-shadow: 0 0 0 4px rgba(255, 102, 185, 0.2);
-      background: rgba(20, 13, 32, 0.84);
+      border-color: #e55aa8;
+      box-shadow: 0 0 0 4px rgba(236, 79, 160, 0.16);
     }
 
     #passageInput {
-      min-height: 210px;
+      min-height: 200px;
     }
 
     #wordInput {
-      min-height: 88px;
+      min-height: 84px;
     }
 
     .chips {
-      margin-top: 10px;
+      margin-top: 9px;
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 6px;
       min-height: 28px;
     }
 
@@ -322,50 +215,45 @@
       align-items: center;
       border-radius: 999px;
       padding: 4px 10px;
-      background: rgba(255, 102, 185, 0.18);
-      border: 1px solid rgba(255, 143, 207, 0.45);
-      color: #ffe7f8;
       font-size: 0.78rem;
-      animation: pop 0.2s ease both;
+      color: #5a2f75;
+      background: #fbefff;
+      border: 1px solid #eecdfb;
     }
 
     .chip.dim {
-      border-style: dashed;
-      background: rgba(195, 161, 255, 0.12);
-      border-color: rgba(201, 174, 247, 0.36);
-      color: #d8caed;
+      color: #8088a4;
+      background: #f5f7fd;
+      border: 1px dashed #d7deef;
     }
 
     .quick {
-      margin-top: 14px;
+      margin-top: 12px;
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .quick button {
-      border: 1px solid rgba(206, 178, 255, 0.4);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.08);
-      color: #ffe9fa;
+      border: 1px solid #d8deef;
+      border-radius: var(--radius-md);
+      background: #f8f9ff;
+      color: #3a4767;
       font: inherit;
       font-size: 0.82rem;
       font-weight: 700;
-      padding: 8px 12px;
+      padding: 8px 11px;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.18s ease, border-color 0.18s ease;
     }
 
     .quick button:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255, 140, 206, 0.7);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      background: #f1f4ff;
     }
 
     .action-bar {
-      margin-top: 14px;
+      margin-top: 12px;
       display: flex;
-      gap: 10px;
+      gap: 9px;
       flex-wrap: wrap;
     }
 
@@ -375,9 +263,9 @@
       font: inherit;
       font-weight: 800;
       cursor: pointer;
-      transition: transform 0.16s ease, opacity 0.16s ease, box-shadow 0.2s ease, filter 0.16s ease;
-      padding: 12px 16px;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.2s ease;
       min-height: 44px;
+      padding: 11px 15px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -389,26 +277,25 @@
     }
 
     .btn[disabled] {
+      opacity: 0.52;
       cursor: not-allowed;
-      opacity: 0.5;
       transform: none;
       box-shadow: none;
-      filter: saturate(0.75);
     }
 
     .btn.primary {
       flex: 1;
-      min-width: 210px;
-      background: linear-gradient(135deg, var(--pink) 0%, var(--pink-strong) 42%, #a852ff 100%);
+      min-width: 200px;
       color: #fff;
-      box-shadow: 0 10px 18px rgba(255, 72, 169, 0.36);
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
+      box-shadow: 0 9px 18px rgba(214, 63, 143, 0.26);
     }
 
     .btn.secondary {
-      min-width: 195px;
-      color: #ffe9fa;
-      border: 1px solid rgba(211, 178, 255, 0.35);
-      background: linear-gradient(145deg, rgba(48, 31, 72, 0.85), rgba(35, 22, 55, 0.8));
+      min-width: 185px;
+      color: #3b4664;
+      background: #eff2fb;
+      border: 1px solid #d6deef;
     }
 
     .loader {
@@ -416,8 +303,8 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.55);
-      border-top-color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.56);
+      border-top-color: #ffffff;
       animation: spin 0.8s linear infinite;
     }
 
@@ -427,89 +314,53 @@
 
     .status {
       margin-top: 12px;
-      border-radius: 11px;
-      border: 1px solid rgba(211, 179, 255, 0.35);
       min-height: 42px;
-      padding: 10px 11px;
+      border-radius: 10px;
+      border: 1px solid #d9dfef;
+      padding: 10px;
       display: flex;
       align-items: center;
-      color: #f0e4ff;
-      background: rgba(64, 40, 95, 0.45);
+      background: #f7f9ff;
+      color: #4a5676;
       font-size: 0.88rem;
     }
 
     .status.pending {
-      color: #fff4c7;
-      border-color: rgba(255, 212, 118, 0.45);
-      background: rgba(105, 71, 22, 0.4);
+      background: #fff6e9;
+      border-color: #ffdfaa;
+      color: #916628;
       font-weight: 700;
     }
 
     .status.success {
-      color: #d9fff2;
-      border-color: rgba(127, 247, 214, 0.48);
-      background: rgba(20, 84, 61, 0.42);
+      background: #ecfff6;
+      border-color: #b8ecd6;
+      color: var(--success);
       font-weight: 700;
     }
 
     .status.error {
-      color: #ffe4e6;
-      border-color: rgba(255, 146, 161, 0.55);
-      background: rgba(117, 35, 53, 0.42);
+      background: #fff1f3;
+      border-color: #f5c4cb;
+      color: var(--danger);
       font-weight: 700;
     }
 
     .hint {
-      margin-top: 9px;
-      font-size: 0.79rem;
-      color: #ccb8e3;
-      line-height: 1.55;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: #727c99;
+      line-height: 1.52;
     }
 
     .mono {
       font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.76rem;
-      color: #ddcef2;
-    }
-
-    .guide-card {
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(208, 176, 255, 0.3);
-      background: rgba(255, 255, 255, 0.06);
-      padding: 12px;
-      margin-bottom: 10px;
-    }
-
-    .guide-card:last-child {
-      margin-bottom: 0;
-    }
-
-    .guide-card h3 {
-      margin: 0 0 5px;
-      font-family: "Baloo 2", sans-serif;
-      font-size: 0.96rem;
-      color: #ffdcf5;
-      letter-spacing: 0.01em;
-    }
-
-    .guide-card p {
-      margin: 0;
-      color: #dfcfee;
-      font-size: 0.82rem;
-      line-height: 1.55;
-    }
-
-    .guide-card p + p {
-      margin-top: 5px;
+      font-size: 0.74rem;
+      color: #7882a4;
     }
 
     .preview {
-      animation: reveal 0.72s ease-out both;
-      animation-delay: 0.12s;
-    }
-
-    .preview-shell {
-      padding: 16px;
+      padding: 15px;
     }
 
     .preview-head {
@@ -522,16 +373,15 @@
 
     .preview-title {
       margin: 0;
-      font-family: "Baloo 2", sans-serif;
-      font-size: 1.07rem;
-      letter-spacing: 0.01em;
+      font-family: "Baloo 2", "M PLUS Rounded 1c", sans-serif;
+      font-size: 1.03rem;
     }
 
     .table-wrap {
-      border-radius: 14px;
-      border: 1px solid rgba(211, 179, 255, 0.35);
+      border: 1px solid #dce2f1;
+      border-radius: 12px;
       overflow: hidden;
-      background: rgba(11, 8, 20, 0.65);
+      background: #fff;
     }
 
     table {
@@ -541,22 +391,22 @@
 
     thead th {
       text-align: left;
-      padding: 10px 12px;
       font-size: 0.75rem;
       letter-spacing: 0.03em;
       text-transform: uppercase;
-      color: #fbe6f9;
-      background: rgba(255, 103, 185, 0.2);
-      border-bottom: 1px solid rgba(218, 186, 255, 0.35);
+      color: #4a5676;
+      background: #f7f9ff;
+      padding: 10px 11px;
+      border-bottom: 1px solid #e2e7f6;
     }
 
     tbody td {
       vertical-align: top;
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(218, 186, 255, 0.22);
-      color: #f7edff;
+      padding: 10px 11px;
+      border-bottom: 1px solid #edf1fa;
       font-size: 0.9rem;
-      line-height: 1.62;
+      line-height: 1.6;
+      color: #2f3a57;
     }
 
     tbody tr:last-child td {
@@ -578,66 +428,19 @@
       }
     }
 
-    @keyframes float {
-      0%,
-      100% {
-        transform: translateY(0) rotate(0);
-      }
-      50% {
-        transform: translateY(-11px) rotate(2deg);
-      }
-    }
-
-    @keyframes reveal {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes pop {
-      from {
-        opacity: 0;
-        transform: translateY(4px) scale(0.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @media (max-width: 960px) {
-      .stat-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .side-panel {
-        order: 2;
-      }
-
-      .preview {
-        order: 3;
-      }
-    }
-
     @media (max-width: 760px) {
       body {
-        padding: 12px 10px 24px;
+        padding: 10px 10px 22px;
       }
 
-      .hero,
-      .input-panel,
-      .side-panel,
-      .preview-shell {
-        padding: 14px;
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .panel,
+      .preview,
+      .hero {
         border-radius: 16px;
       }
 
@@ -646,11 +449,11 @@
       }
 
       #passageInput {
-        min-height: 178px;
+        min-height: 170px;
       }
 
       #wordInput {
-        min-height: 102px;
+        min-height: 100px;
       }
 
       .quick button {
@@ -661,10 +464,9 @@
         position: sticky;
         bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
         z-index: 4;
-        border: 1px solid rgba(228, 194, 255, 0.38);
-        border-radius: 14px;
-        background: rgba(26, 16, 42, 0.95);
-        backdrop-filter: blur(7px);
+        background: rgba(255, 255, 255, 0.97);
+        border: 1px solid #dbe2f2;
+        border-radius: 12px;
         padding: 8px;
       }
 
@@ -691,7 +493,7 @@
       }
 
       tbody tr {
-        border-bottom: 1px solid rgba(212, 180, 255, 0.24);
+        border-bottom: 1px solid #e6ebf7;
         padding: 8px 0;
       }
 
@@ -703,8 +505,8 @@
       tbody td:last-child::before {
         display: block;
         font-size: 0.73rem;
-        color: #dcc9f0;
-        margin-bottom: 3px;
+        color: #7480a1;
+        margin-bottom: 4px;
       }
 
       tbody td:first-child::before {
@@ -718,128 +520,80 @@
   </style>
 </head>
 <body>
-  <div class="kuromi-bg" aria-hidden="true">
-    <span class="orb a"></span>
-    <span class="orb b"></span>
-    <span class="orb c"></span>
-  </div>
-
   <main class="app">
-    <header class="panel hero">
-      <div class="hero-top">
-        <div class="badge-wrap">
-          <span class="badge">Kuromi Inspired</span>
-          <span class="badge alt">Cute x Dark</span>
-        </div>
-      </div>
-      <h1>NativeCamp <span class="accent">Review Studio</span></h1>
-      <p>
-        長文と分からなかった単語を入力すると、Anki向けの2列CSVを自動生成します。
-        1列目は赤字+下線の抜粋文、2列目は「単語の意味」と「日本語訳」です。
-      </p>
-
-      <div class="stat-grid">
-        <article class="stat-card">
-          <div class="stat-label">入力文字数</div>
-          <div id="statChars" class="stat-value">0</div>
-        </article>
-        <article class="stat-card">
-          <div class="stat-label">検出文数</div>
-          <div id="statSentences" class="stat-value">0</div>
-        </article>
-        <article class="stat-card">
-          <div class="stat-label">単語数</div>
-          <div id="statWords" class="stat-value">0</div>
-        </article>
-        <article class="stat-card">
-          <div class="stat-label">CSV行数</div>
-          <div id="statRows" class="stat-value">0</div>
-        </article>
-      </div>
-    </header>
-
-    <section class="layout">
-      <section class="panel input-panel">
-        <h2 class="panel-title">Input Zone</h2>
-        <p class="panel-sub">長文を貼り付けて、分からなかった単語を入力してください。</p>
-
-        <div class="field">
-          <div class="field-head">
-            <label class="field-label" for="passageInput"><span class="step">1</span>長文をコピペ</label>
-            <span id="passageMeta" class="field-meta">0 chars / 0 sentences</span>
-          </div>
-          <textarea id="passageInput" placeholder="ここに長文を貼り付けてください"></textarea>
-        </div>
-
-        <div class="field">
-          <div class="field-head">
-            <label class="field-label" for="wordInput"><span class="step">2</span>分からなかった単語</label>
-            <span id="wordMeta" class="field-meta">0 words</span>
-          </div>
-          <textarea id="wordInput" placeholder="改行・カンマ区切りで入力（例: crucial, infer, nuance）"></textarea>
-          <div id="wordChips" class="chips" aria-live="polite"></div>
-        </div>
-
-        <div class="quick">
-          <button id="clearBtn" type="button">全クリア</button>
-        </div>
-
-        <div class="action-bar">
-          <button id="generateBtn" class="btn primary" type="button">
-            <span class="loader" aria-hidden="true"></span>
-            <span id="generateLabel">CSVを作成</span>
-          </button>
-          <button id="downloadBtn" class="btn secondary" type="button" disabled>CSVをダウンロード</button>
-        </div>
-
-        <p id="statusText" class="status" aria-live="polite">入力後に「CSVを作成」を押してください。</p>
-        <p class="hint">
-          <span class="mono">形式: (分からなかった単語数)行 x 2列</span><br />
-          1列目: 抜粋文（単語を赤字+下線） / 2列目: 単語の意味 + 日本語訳
+    <header class="card hero">
+      <section>
+        <p class="tag">CSV Creator Tool</p>
+        <h1>NativeCamp Review</h1>
+        <p>
+          長文と分からなかった単語から、Anki向けの2列CSVを作成します。
+          2列目は「【単語の意味】」「【日本語訳】」を出力します。
         </p>
       </section>
 
-      <aside class="panel side-panel">
-        <article class="guide-card">
-          <h3>How to Use</h3>
-          <p>1. 長文を貼り付ける</p>
-          <p>2. 単語を入力する</p>
-          <p>3. CSV作成してダウンロード</p>
-        </article>
+      <figure class="character">
+        <img id="characterImage" src="CSVキャラクター.png" alt="CSVツールのキャラクター" />
+        <figcaption id="characterCaption">キャラクター画像</figcaption>
+      </figure>
+    </header>
 
-        <article class="guide-card">
-          <h3>Anki Hint</h3>
-          <p>インポート時に「HTMLを許可」にすると、赤字+下線がそのまま表示されます。</p>
-        </article>
+    <section class="card panel">
+      <h2>入力</h2>
+      <p class="panel-sub">長文を貼り付けて、分からなかった単語を入力してください。</p>
 
-        <article class="guide-card">
-          <h3>Output Rules</h3>
-          <p>2列目は「【単語の意味】」「【日本語訳】」の順で出力されます。</p>
-          <p>重複単語は1件にまとめてCSV化します。</p>
-        </article>
-      </aside>
+      <div class="field">
+        <div class="field-head">
+          <label class="field-label" for="passageInput"><span class="step">1</span>長文をコピペ</label>
+        </div>
+        <textarea id="passageInput" placeholder="ここに長文を貼り付けてください"></textarea>
+      </div>
+
+      <div class="field">
+        <div class="field-head">
+          <label class="field-label" for="wordInput"><span class="step">2</span>分からなかった単語</label>
+        </div>
+        <textarea id="wordInput" placeholder="改行・カンマ区切りで入力（例: crucial, infer, nuance）"></textarea>
+        <div id="wordChips" class="chips" aria-live="polite"></div>
+      </div>
+
+      <div class="quick">
+        <button id="clearBtn" type="button">全クリア</button>
+      </div>
+
+      <div class="action-bar">
+        <button id="generateBtn" class="btn primary" type="button">
+          <span class="loader" aria-hidden="true"></span>
+          <span id="generateLabel">CSVを作成</span>
+        </button>
+        <button id="downloadBtn" class="btn secondary" type="button" disabled>CSVをダウンロード</button>
+      </div>
+
+      <p id="statusText" class="status" aria-live="polite">入力後に「CSVを作成」を押してください。</p>
+      <p class="hint">
+        <span class="mono">形式: (分からなかった単語数)行 x 2列</span><br />
+        1列目: 抜粋文（単語を赤字+下線） / 2列目: 単語の意味 + 日本語訳
+      </p>
     </section>
 
-    <section id="previewSection" class="preview" hidden>
-      <div class="panel preview-shell">
-        <div class="preview-head">
-          <h2 class="preview-title">プレビュー</h2>
-          <span id="rowCount" class="mono">0 rows</span>
-        </div>
+    <section id="previewSection" class="card preview" hidden>
+      <div class="preview-head">
+        <h2 class="preview-title">プレビュー</h2>
+        <span id="rowCount" class="mono">0 rows</span>
+      </div>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th class="col-front">1列目: 抜粋文（Anki表）</th>
-                <th class="col-back">2列目: 単語の意味・日本語訳（Anki裏）</th>
-              </tr>
-            </thead>
-            <tbody id="previewBody"></tbody>
-          </table>
-        </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-front">1列目: 抜粋文（Anki表）</th>
+              <th class="col-back">2列目: 単語の意味・日本語訳（Anki裏）</th>
+            </tr>
+          </thead>
+          <tbody id="previewBody"></tbody>
+        </table>
       </div>
     </section>
+  </main>
 
   <script>
     const HIGHLIGHT_OPEN = "__HL_OPEN__";
@@ -857,15 +611,10 @@
     const previewSection = document.getElementById("previewSection");
     const previewBody = document.getElementById("previewBody");
     const rowCount = document.getElementById("rowCount");
-
     const wordChips = document.getElementById("wordChips");
-    const passageMeta = document.getElementById("passageMeta");
-    const wordMeta = document.getElementById("wordMeta");
 
-    const statChars = document.getElementById("statChars");
-    const statSentences = document.getElementById("statSentences");
-    const statWords = document.getElementById("statWords");
-    const statRows = document.getElementById("statRows");
+    const characterImage = document.getElementById("characterImage");
+    const characterCaption = document.getElementById("characterCaption");
 
     const state = {
       rows: [],
@@ -1039,19 +788,8 @@
       wordChips.innerHTML = words.map((word) => `<span class="chip">${escapeHtml(word)}</span>`).join("");
     }
 
-    function updateStats() {
-      const passage = passageInput.value.trim();
+    function updateUIState() {
       const words = toWordList(wordInput.value);
-      const sentenceCount = passage ? splitSentences(passage).length : 0;
-
-      passageMeta.textContent = `${passage.length} chars / ${sentenceCount} sentences`;
-      wordMeta.textContent = `${words.length} words`;
-
-      statChars.textContent = String(passage.length);
-      statSentences.textContent = String(sentenceCount);
-      statWords.textContent = String(words.length);
-      statRows.textContent = String(state.rows.length);
-
       renderWordChips(words);
     }
 
@@ -1189,7 +927,6 @@
         previewBody.innerHTML = "";
         previewSection.hidden = true;
         rowCount.textContent = "0 rows";
-        updateStats();
         return;
       }
 
@@ -1207,7 +944,6 @@
       previewBody.innerHTML = html;
       rowCount.textContent = `${rows.length} rows`;
       previewSection.hidden = false;
-      updateStats();
     }
 
     function clearAllInputs() {
@@ -1219,7 +955,7 @@
       downloadBtn.disabled = true;
       renderPreview([]);
       setStatus("入力内容をクリアしました。", "info");
-      updateStats();
+      updateUIState();
     }
 
     async function handleGenerate() {
@@ -1289,13 +1025,18 @@
       setStatus("CSVをダウンロードしました。Anki取り込み時はHTMLを有効にしてください。", "success");
     }
 
-    passageInput.addEventListener("input", updateStats);
-    wordInput.addEventListener("input", updateStats);
+    characterImage.addEventListener("error", () => {
+      characterImage.style.display = "none";
+      characterCaption.textContent = "CSVキャラクター.png を同じフォルダに置くと表示されます";
+    });
+
+    passageInput.addEventListener("input", updateUIState);
+    wordInput.addEventListener("input", updateUIState);
     generateBtn.addEventListener("click", handleGenerate);
     downloadBtn.addEventListener("click", handleDownload);
     clearBtn.addEventListener("click", clearAllInputs);
 
-    updateStats();
+    updateUIState();
     renderPreview([]);
   </script>
 </body>
