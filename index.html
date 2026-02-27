@@ -428,6 +428,54 @@
       }
     }
 
+    /* Editable cell styles */
+    tbody td[contenteditable] {
+      cursor: text;
+      border-radius: 4px;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    tbody td[contenteditable]:hover {
+      background-color: #f8f5ff;
+    }
+
+    tbody td[contenteditable]:focus {
+      outline: none;
+      background-color: #fefcff;
+      box-shadow: inset 0 0 0 2px rgba(122, 109, 255, 0.3);
+    }
+
+    .col-action {
+      width: 36px;
+      text-align: center;
+      vertical-align: middle !important;
+    }
+
+    .row-delete-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid #f0c4cb;
+      border-radius: 8px;
+      background: #fff5f6;
+      color: var(--danger);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .row-delete-btn:hover {
+      background: #ffe0e4;
+    }
+
+    .row-delete-btn:active {
+      transform: scale(0.92);
+    }
+
     @media (max-width: 760px) {
       body {
         padding: 10px 10px 22px;
@@ -501,20 +549,33 @@
         border-bottom: none;
       }
 
-      tbody td:first-child::before,
-      tbody td:last-child::before {
+      tbody td.col-front::before,
+      tbody td.col-back::before {
         display: block;
         font-size: 0.73rem;
         color: #7480a1;
         margin-bottom: 4px;
       }
 
-      tbody td:first-child::before {
+      tbody td.col-front::before {
         content: "抜粋文";
       }
 
-      tbody td:last-child::before {
+      tbody td.col-back::before {
         content: "意味・日本語訳";
+      }
+
+      tbody td.col-action {
+        padding: 4px 10px;
+        text-align: right;
+      }
+
+      tbody td.col-action::before {
+        display: none;
+      }
+
+      tbody td[contenteditable] {
+        min-height: 44px;
       }
     }
   </style>
@@ -587,6 +648,7 @@
             <tr>
               <th class="col-front">1列目: 抜粋文（Anki表）</th>
               <th class="col-back">2列目: 単語の意味・日本語訳（Anki裏）</th>
+              <th class="col-action"></th>
             </tr>
           </thead>
           <tbody id="previewBody"></tbody>
@@ -932,10 +994,11 @@
 
       const html = rows
         .map(
-          (row) => `
-            <tr>
-              <td class="col-front">${row.frontHtml}</td>
-              <td class="col-back">${escapeHtml(row.backText).replace(/\n/g, "<br>")}</td>
+          (row, i) => `
+            <tr data-index="${i}">
+              <td class="col-front" contenteditable="true">${row.frontHtml}</td>
+              <td class="col-back" contenteditable="true">${escapeHtml(row.backText).replace(/\n/g, "<br>")}</td>
+              <td class="col-action"><button type="button" class="row-delete-btn" aria-label="行を削除" title="削除">✕</button></td>
             </tr>
           `
         )
@@ -1006,12 +1069,13 @@
     }
 
     function handleDownload() {
-      if (!state.csvContent) {
+      if (!state.rows.length) {
         setStatus("先にCSVを作成してください。", "error");
         return;
       }
 
-      const blob = new Blob([state.csvContent], { type: "text/csv;charset=utf-8;" });
+      const csvContent = buildCsv(state.rows);
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
 
@@ -1035,6 +1099,60 @@
     generateBtn.addEventListener("click", handleGenerate);
     downloadBtn.addEventListener("click", handleDownload);
     clearBtn.addEventListener("click", clearAllInputs);
+
+    // Sync edited cell content back to state.rows on blur
+    previewBody.addEventListener("blur", function (e) {
+      const td = e.target;
+      if (td.tagName !== "TD" || !td.hasAttribute("contenteditable")) return;
+
+      const tr = td.closest("tr");
+      if (!tr) return;
+      const index = parseInt(tr.dataset.index, 10);
+      if (isNaN(index) || index < 0 || index >= state.rows.length) return;
+
+      if (td.classList.contains("col-front")) {
+        state.rows[index].frontHtml = td.innerHTML;
+      } else if (td.classList.contains("col-back")) {
+        const temp = document.createElement("div");
+        temp.innerHTML = td.innerHTML.replace(/<br\s*\/?>/gi, "\n");
+        state.rows[index].backText = temp.textContent || "";
+      }
+    }, true);
+
+    // Delete row button
+    previewBody.addEventListener("click", function (e) {
+      const btn = e.target.closest(".row-delete-btn");
+      if (!btn) return;
+
+      const tr = btn.closest("tr");
+      if (!tr) return;
+      const index = parseInt(tr.dataset.index, 10);
+      if (isNaN(index) || index < 0 || index >= state.rows.length) return;
+
+      state.rows.splice(index, 1);
+      renderPreview(state.rows);
+
+      if (state.rows.length === 0) {
+        downloadBtn.disabled = true;
+        setStatus("すべての行が削除されました。", "info");
+      } else {
+        setStatus(`行を削除しました（残り ${state.rows.length} 行）`, "success");
+      }
+    });
+
+    // Keyboard handling for editable cells
+    previewBody.addEventListener("keydown", function (e) {
+      const td = e.target;
+      if (td.tagName !== "TD" || !td.hasAttribute("contenteditable")) return;
+
+      if (e.key === "Enter" && td.classList.contains("col-front")) {
+        e.preventDefault();
+      }
+
+      if (e.key === "Escape") {
+        td.blur();
+      }
+    });
 
     updateUIState();
     renderPreview([]);
